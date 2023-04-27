@@ -10,49 +10,66 @@ export class App extends Component {
     bad: 0,
   };
 
-  handleIncrement = e => {
-    console.log('option:', e.target.name);
-    // const option = e.target.name;
-    this.setState(prevState => ({
-      good: prevState.good + 1,
+  
+
+  handleClick = e => {
+    const option = e.target.name;
+    if(option){
+      this.setState(prevState => ({
+      [option]: prevState[option] + 1,
     }));
+    }
+    
   };
+countTotalFeedback=()=>{
+   return this.state.good + this.state.neutral + this.state.bad;
+     
+  }
+
+  countPositiveFeedbackPercentage(){
+    console.log(this.state.good*100/this.countTotalFeedback())
+  }
   render() {
+    const options= Object.keys(this.state) ;
+
     return (
       <div>
-        {/* <Section title="Please leave feedback">
-          <FeedbackOption options={this.state} onLeaveFeedback={this.handleIncrement} />
+        <Section title="Please leave feedback">
+          <FeedbackOption options={options} onLeaveFeedback={this.handleClick} />
         </Section>
         <Section title="Statistics">
           <Statistics
-            good={good}
-            neutral={neutral}
-            bad={bad}
-            total={total}
-            positivePercentage={positivePercentage}
+            good={this.state.good}
+            neutral={this.state.neutral}
+            bad={this.state.bad}
+            total={()=>{this.countTotalFeedback()}}
+            positivePercentage={this.state.positivePercentage}
           />
-        </Section> */}
+        </Section>
 
-        <h1>Please leave feedback</h1>
-        <button type="button" name="1" onClick={this.handleIncrement}>
-          Good
+        {/* <h1>Please leave feedback</h1>
+        <div className="boxBtn">
+      {this.props.options.map((option, onLeaveFeedback) => (
+        <button
+          key={option}
+          type="button"
+          name={option}
+          onClick={onLeaveFeedback}
+        >
+          {option}
         </button>
-        <button type="button" name="2" onClick={this.handleIncrement}>
-          Neutral
-        </button>
-        <button type="button" name="3" onClick={this.handleIncrement}>
-          Bad
-        </button>
-        <div>
+      ))}
+    </div> */}
+        {/* <div>
           <h2>Statistics</h2>
           <ul>
             <li>Good: {this.state.good}</li>
             <li>Neutral</li>
             <li>Bad</li>
-            <li>Total</li>
+            <li>Total: {this.countTotalFeedback}</li>
             <li>Positive feedback</li>
           </ul>
-        </div>
+        </div> */}
       </div>
     );
   }
