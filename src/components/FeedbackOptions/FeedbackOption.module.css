@@ -18,6 +18,7 @@
   background-color: rgb(183, 240, 221);
 }
 
+.btn:focus,
 .btn:hover {
   background-color: rgb(112, 247, 202);
 }
